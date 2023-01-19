@@ -39,9 +39,8 @@ def read_data():
             konten = content.split(",")
             
             jenis = konten[0]
-             
             nopol = konten[1]
-            waktutgl = konten[2]
+            waktutgl = konten[2].replace("\n","")
 
             print(f"{index+1:2} | {nopol:.10} | {jenis:.15} | {waktutgl:.20}\n", end="")    
 
@@ -116,6 +115,26 @@ def update():
         file.seek(pjng_data*(usr_option-1))
         file.write(data_str)
 
+def dltdata():
+    import os
+    os.system("CLS")
+    print("\n           -Hapus Data kendaraan  -")
+    bukadata = open("data.txt")
+    output = []
+    str = input("\nMasukkan Nama Kendaraan yang di hapus : ")
+    for hps in bukadata:
+        if not hps.startswith(str):
+            output.append(hps)
+    
+    bukadata = open("data.txt.","w")
+    bukadata.writelines(output)
+    print("\n[Data kendaraan Telah Terhapus!]")
+    bukadata.close()
+    print("\nIngin menghapus data kendaraan lagi? (Y/N)", end=" ")
+    hpsdata = input(" : ")
+    if hpsdata == "y" or hpsdata == "Y":
+        dltdata()
+
 os.system("cls")
 view_menu()
 
@@ -127,4 +146,5 @@ match user_option:
     case "3" : cek_harga()
     case "4" : print("Hello World")
     case "5" : update()
-    case "6" : print("Hello World")
+    case "6" : dltdata()
+
